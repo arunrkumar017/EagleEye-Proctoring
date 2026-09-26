@@ -109,7 +109,7 @@ function TestPage() {
   const beginTest = async () => {
     try {
       const res = await axios.post(
-        'http://localhost:5000/api/test-session/start',
+        `${import.meta.env.VITE_API_URL}/api/test-session/start`,
         { testName: `${selectedSubject} Mock Test` },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -125,7 +125,7 @@ function TestPage() {
     try {
       if (sessionId) {
         await axios.patch(
-          `http://localhost:5000/api/test-session/end/${sessionId}`,
+          `${import.meta.env.VITE_API_URL}/api/test-session/end/${sessionId}`,
           {},
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -159,7 +159,7 @@ function TestPage() {
       formData.append('frame', blob, 'frame.jpg');
 
       try {
-        const res = await axios.post('http://localhost:8000/api/analyze-frame', formData);
+        const res = await axios.post(`${import.meta.env.VITE_AI_URL}/api/analyze-frame`, formData);
         const { faceCount, violation } = res.data;
 
         if (violation === 'no-face') {
@@ -194,7 +194,7 @@ function TestPage() {
     if (!sessionId) return;
     try {
       const res = await axios.post(
-        'http://localhost:5000/api/violation/log',
+        `${import.meta.env.VITE_API_URL}/api/violation/log`,
         { testSessionId: sessionId, type, severity },
         { headers: { Authorization: `Bearer ${token}` } }
       );

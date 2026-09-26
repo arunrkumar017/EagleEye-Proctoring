@@ -14,7 +14,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchSessions = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/test-session/all', {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/test-session/all`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setSessions(res.data);
@@ -32,7 +32,7 @@ function Dashboard() {
     setSelectedSession(session);
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/violation/session/${session._id}`,
+        `${import.meta.env.VITE_API_URL}/api/violation/session/${session._id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setViolations(res.data);
